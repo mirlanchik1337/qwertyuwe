@@ -39,6 +39,7 @@ async def start_handler(massage: types.Message):
     await massage.answer('это ансфер')
     await massage.reply(massage.from_user.first_name)
 
+
 async def info_hand(massage: types.Message):
     await massage.answer("это новая функция ")
 def reg_client(db: Dispatcher):
