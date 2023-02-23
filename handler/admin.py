@@ -6,7 +6,7 @@ async def ban(massage: types.Message):
     if massage.chat.type != 'private':
         if massage.from_user.id in ADMIN:
             await bot.kick_chat_member(massage.chat.id,
-                                       massage.reply_to_message.from_user.id)
+                                       massage.reply_-to_message.from_user.id)
             await massage.answer(f"он вышел сам")
         elif not massage.reply_to_message:
             await massage.answer(f'покажи кого банить мой хозяин ?')
