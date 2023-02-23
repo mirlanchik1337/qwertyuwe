@@ -1,22 +1,18 @@
-from aiogram import types, Dispatcher
-from config import bot, ADMIN
+from aiogram import Dispatcher, types
+from config import bot
+from .extra import users
 
 
-async def ban(massage: types.Message):
-    if massage.chat.type != 'private':
-        if massage.from_user.id in ADMIN:
-            await bot.kick_chat_member(massage.chat.id,
-                                       massage.reply_-to_message.from_user.id)
-            await massage.answer(f"он вышел сам")
-        elif not massage.reply_to_message:
-            await massage.answer(f'покажи кого банить мой хозяин ?')
-        else:
-            await massage.answer(f"ты не мой хозяин ")
 
-            await massage.answer(f'@{massage.from_user.username} '
-                                 f'{massage.reply_to_message.from_user.full_name}')
+async def ban(message: types.Message):
+    if message.chat.type != 'private':
+        message_words = message.text.split()
+        username = message_words[1]
+        await bot.kick_chat_member(message.chat.id, user_id=users[f'{username}'])
+        await message.answer('Он вышел сам!')
     else:
-        await massage.answer(f"это не является группой ")
+        await message.answer('Попутал')
+
 
 def reg_ban(db: Dispatcher):
-    db.register_message_handler(ban, commands=['ban'], commands_prefix='!/')
+    db.register_message_handler(ban, commands=['ban'], commands_prefix=['!'])
